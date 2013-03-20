@@ -1,0 +1,42 @@
+#!python
+import texthon
+import io
+import string
+import argparse
+
+parser = argparse.ArgumentParser(description="Texthon template engine")
+parser.add_argument('template', help='the template to evaluate')
+parser.add_argument('-I', '--include', nargs='*', action='append', default=[], help='include paths to resolve loads')
+parser.add_argument('-P', '--param', action='append', default=[], help='parameter defines (KEY=VALUE)')
+parser.add_argument('-pf', '--paramfile', default=None, help='parameter definition file')
+parser.add_argument('-v', '--verbose', action='store_true', default=False)
+parser.add_argument('-d', '--dump', action='store_true', default=False)
+args = parser.parse_args()
+
+engine = texthon.Engine()
+engine.add_includes(args.include)
+engine.set_verbose(args.verbose)
+module = engine.load_file(args.template)
+
+if args.dump:
+	for out in engine.modules.values():
+		out.print()
+
+path = module.path
+
+# compile and run
+engine.make()
+
+params = {}
+
+if args.paramfile:
+	params = eval(open(args.paramfile).read())
+
+for param in args.param:
+	k, v = param.split('=')
+	params[k] = v
+
+module = engine.modules[path]
+output = module.main.execute(**params)
+print(output)
+

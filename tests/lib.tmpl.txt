@@ -1,0 +1,19 @@
+#import string as string
+#global author = "name"
+
+#template tpl1(count)
+\#template this is not an actual template decl
+#!temp = 2
+#{for i in range(0, count):
+	count ${i}
+#	{if i == temp:
+	this should be $>
+a single line
+#	}
+#}
+$author says:
+	temp($temp) * count($count) = ${temp * count}
+	let's test some escapes$$$$
+All ascii letters: ${string.ascii_letters}
+#end template
+
