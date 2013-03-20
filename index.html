@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Texthon : Half text, half Python." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Texthon</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/kevinic/texthon">View on GitHub</a>
+
+          <h1 id="project_title">Texthon</h1>
+          <h2 id="project_tagline">Half text, half Python.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/kevinic/texthon/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/kevinic/texthon/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h3>What is Texthon</h3>
+
+<p>Texthon is a template engine that processes text files with Python code embedded.</p>
+
+<h3>Motivation and Philosophy</h3>
+
+<p>For a project at a game company, I relied on <a href="http://www.cheetahtemplate.org/">Cheetah templates</a> to generate C++ serialization code for game objects.  The results were great: it was easy to maintain; it generated efficient code; it was much less error-prone than hand writing serialization statements.</p>
+
+<p>I would continue on using Cheetah except for several annoyances:</p>
+
+<p>It was kind of a pain to distribute Cheetah along with my templates, especially since the Windows version perpetually bugs me about having Namemapper installed (a compiled extension that I ended up having to build myself).</p>
+
+<p><strong>Texthon aims to have few source files with only dependencies on standard libraries.  It should be easy to copy and distribute</strong></p>
+
+<p>I felt Cheetah was constantly getting in my way of organizing my templates in a simple, efficient manner.  The setup with #extend, #implement, &amp; etc. felt unnecessary to me.  Having worked with xslt before, I like the conceptual notion that a template definition simply transforms to a function definition: it takes some parameters and yields a textual output.</p>
+
+<p><strong>A Texthon template roughly corresponds to a Python function (with some caveats). Texthon organizes templates in a way that mirrors Python modules.</strong></p>
+
+<p>After a while, I realized I mostly loved having convenience of Python libraries while writing templates, and in fact Cheetah was getting in the way of that.  I want a template engine that lets me leverage Python statements and modules as much as possible.</p>
+
+<p><strong>Texthon avoids defining its own directives like #for, #if.  Instead it simply relies on Python statements for much of its logic control</strong></p>
+
+<p>Finally, Cheetah just doesn't seem to be very actively maintained anymore, with no support for Python 3.0+ in sight.</p>
+
+<p><strong>Texthon supports only Python 3.</strong></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Texthon maintained by <a href="https://github.com/kevinic">kevinic</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
