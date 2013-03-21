@@ -1,4 +1,5 @@
 from texthon.parser import Parser
+import texthon.base as base
 import io
 import os
 import sys
@@ -31,18 +32,18 @@ class Template_Function:
 		# skip the exec frame
 		tb = map(trans, traceback.extract_tb(exc_traceback)[1:])
 
-		print("Traceback with template source lines:", file=sys.stderr)
+		sys.stderr.write("Traceback with template source lines:\n", file=sys.stderr)
 		msg = traceback.format_list(tb)
 		sys.stderr.write("".join(msg))
 
 		msg = traceback.format_exception_only(type(e), e)
 		sys.stderr.write("".join(msg))
 
-		print("", file=sys.stderr)
+		sys.stderr.write("\n")
 
 
 	def execute(self, *args, **kwargs):
-		output = io.StringIO()
+		output = base.StringIO()
 
 		local_vars = {
 			"_module" : self.module,
@@ -123,7 +124,7 @@ class Engine:
 		return os.path.abspath(final_path)
 
 	def load_text(self, text, name):
-		return self.load_module(io.StringIO(text), name, "")
+		return self.load_module(base.StringIO(text), name, "")
 
 	def load_file(self, path, current = ""):
 		path = self.fix_path(path, current)

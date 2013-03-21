@@ -9,7 +9,7 @@ class Template_Definition:
 		self.source_lines = []
 		self.params = []
 
-	def print(self):
+	def dump(self):
 		print("code: ")
 		print(self.code)
 		print("text: ")
@@ -23,7 +23,7 @@ class Module_Definition:
 		self.templates = {}
 		self.variables = {}
 
-	def print(self):
+	def dump(self):
 		print("Module : {}".format(self.path))
 		print("python imports: " + repr(self.py_imports))
 		print("template imports: " + repr(self.template_imports))
@@ -32,7 +32,7 @@ class Module_Definition:
 		for key, value in self.templates.items():
 			print("Template: " + key)
 			print()
-			value.print()
+			value.dump()
 
 class Parse_Exception(Exception):
 	def __init__(self, context, reason):
@@ -80,15 +80,15 @@ class Parser:
 
 		self.verbose = verbose
 
-	def print(self, context, text):
+	def do_print(self, context, text):
 		print("{0}({1}): {2}".format(context.title, context.line, text))
 
 	def trace(self, context, text):
 		if self.verbose:
-			self.print(context, text)
+			self.do_print(context, text)
 
 	def warning(self, context, text):
-		self.print(context, "warning: {0}".format(text))
+		self.do_print(context, "warning: {0}".format(text))
 
 	def process_module(self, input_stream, title):
 		module = Module_Definition()
@@ -127,7 +127,7 @@ class Parser:
 
 	def parse_space(self, context, line, cursor):
 		limit = len(line)
-		space = io.StringIO()
+		space = base.StringIO()
 		while cursor < limit and line[cursor].isspace():
 			space.write(line[cursor])
 			cursor += 1
@@ -137,7 +137,7 @@ class Parser:
 	def parse_escapestart(self, context, line, cursor):
 		# process escape sequences (only at the begining)
 		limit = len(line)
-		escaped = io.StringIO()
+		escaped = base.StringIO()
 		while cursor < len(line) - 1:
 			if line[cursor] == '\\':
 				escaped.write(line[cursor + 1])
@@ -147,7 +147,7 @@ class Parser:
 		return cursor, escaped.getvalue()
 
 	def parse_identifier(self, context, line, cursor):
-		token = io.StringIO()
+		token = base.StringIO()
 		limit = len(line)
 		# digit is not allowed in the first character
 		if cursor < limit and line[cursor].isdigit():
@@ -166,7 +166,7 @@ class Parser:
 		return cursor, None
 
 	def parse_close_quote(self, context, quote_ch, escape, line, cursor):
-		token = io.StringIO()
+		token = base.StringIO()
 		limit = len(line)
 		saved = cursor
 
@@ -212,7 +212,7 @@ class Parser:
 		return cursor, None
 
 	def parse_module_name(self, context, line, cursor):
-		token = io.StringIO()
+		token = base.StringIO()
 		limit = len(line)
 		saved = cursor
 		while cursor < limit:
@@ -389,7 +389,7 @@ class Parser:
 
 		cursor = 0
 		limit = len(line)
-		literal = io.StringIO()
+		literal = base.StringIO()
 		placeholder = None
 
 		def flush():

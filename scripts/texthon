@@ -20,7 +20,7 @@ module = engine.load_file(args.template)
 
 if args.dump:
 	for out in engine.modules.values():
-		out.print()
+		out.dump()
 
 path = module.path
 
