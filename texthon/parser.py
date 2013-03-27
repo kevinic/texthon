@@ -6,7 +6,9 @@ class Template_Definition:
 	def __init__(self):
 		self.text = []
 		self.code = ""
+		self.definition_line = 0
 		self.source_lines = []
+		self.varags = False
 		self.params = []
 
 	def dump(self):
@@ -15,19 +17,30 @@ class Template_Definition:
 		print("text: ")
 		print(self.text)
 
+class Template_Load:
+	def __init__(self):
+		self.alias = ""
+		self.path = ""
+		self.abs = False
+		self.directive_token = ""
+		self.placeholder = ""
+
 class Module_Definition:
+	""" A parsed template module. """
+
 	def __init__(self):
 		self.path = None
 		self.py_imports = {}
-		self.template_imports = {}
+		self.template_loads = []
 		self.templates = {}
 		self.variables = {}
 
 	def dump(self):
+		""" Dump detailed module information including generated function code"""
 		print("Module : {}".format(self.path))
 		print("python imports: " + repr(self.py_imports))
-		print("template imports: " + repr(self.template_imports))
-		print("globals: " + repr(self.variables))
+		print("template loads: " + repr(self.template_loads))
+		print("attributes: " + repr(self.variables))
 		print()
 		for key, value in self.templates.items():
 			print("Template: " + key)
@@ -62,10 +75,14 @@ class Parse_Context:
 		self.require_pass = False
 
 class Parser:
+	""" The parser used to process template files.
+
+	:param directive_token: the prefix that indicates the start of a directive line.
+	:param placeholder: the character that indicates the start of a placeholder
+	"""
 	def __init__(self,
 			directive_token = "#",
 			sub_ch = "$",
-			verbose = False
 			):
 		self.directive_token = directive_token
 		self.placeholder = sub_ch
@@ -73,22 +90,22 @@ class Parser:
 		self.keywords = {
 			"import" : self.parse_import,
 			"load" : self.parse_load,
-			"global" : self.parse_global,
+			"attribute" : self.parse_attribute,
 			"template" : self.parse_template,
 			"end" : self.parse_end,
 			}
 
-		self.verbose = verbose
+		self.verbose = False
 
-	def do_print(self, context, text):
+	def _print(self, context, text):
 		print("{0}({1}): {2}".format(context.title, context.line, text))
 
 	def trace(self, context, text):
 		if self.verbose:
-			self.do_print(context, text)
+			self._print(context, text)
 
 	def warning(self, context, text):
-		self.do_print(context, "warning: {0}".format(text))
+		self._print(context, "warning: {0}".format(text))
 
 	def process_module(self, input_stream, title):
 		module = Module_Definition()
@@ -115,14 +132,14 @@ class Parser:
 			cursor, prefix = self.parse_escapestart(context, line, cursor)
 			self.parse_text_line(context, prefix + line[cursor:])
 
-	def check_ch(self, ch, ch_class):
+	def _check_ch(self, ch, ch_class):
 		for c in ch_class:
 			if c == ch:
 				return True
 
 		return False
 
-	def check_word_ch(self, ch):
+	def _check_word_ch(self, ch):
 		return ch.isalnum() or ch == '_'
 
 	def parse_space(self, context, line, cursor):
@@ -153,7 +170,7 @@ class Parser:
 		if cursor < limit and line[cursor].isdigit():
 			return cursor, ""
 
-		while cursor < limit and self.check_word_ch(line[cursor]):
+		while cursor < limit and self._check_word_ch(line[cursor]):
 			token.write(line[cursor])
 			cursor += 1
 
@@ -170,9 +187,10 @@ class Parser:
 		limit = len(line)
 		saved = cursor
 
+		complete = False
 		while cursor < limit:
 			ch = line[cursor]
-			if self.check_ch(ch, escape) and cursor < limit - 1:
+			if self._check_ch(ch, escape) and cursor < limit - 1:
 				token.write(line[cursor + 1])
 				cursor += 2
 			elif ch == quote_ch:
@@ -186,11 +204,11 @@ class Parser:
 		if complete:
 			return cursor, token.getvalue()
 		else:
-			raise Parse_Exception("could not find end delimiter {}".format(quote_ch))
+			raise Parse_Exception(context, "could not find end delimiter {}".format(quote_ch))
 
 
 	def parse_quoted(self, context, quote, escape, line, cursor):
-		if cursor < len(line) and self.check_ch(line[cursor], quote):
+		if cursor < len(line) and self._check_ch(line[cursor], quote):
 			quote_ch = line[cursor]
 			cursor += 1
 			return self.parse_close_quote(context, quote_ch, escape, line, cursor)
@@ -217,7 +235,7 @@ class Parser:
 		saved = cursor
 		while cursor < limit:
 			ch = line[cursor]
-			if self.check_word_ch(ch) or ch == '.':
+			if self._check_word_ch(ch) or ch == '.':
 				token.write(ch)
 				cursor += 1
 			else:
@@ -255,7 +273,7 @@ class Parser:
 		cursor, _ = self.parse_space(context, line, cursor)
 		exec_ch = "!{}"
 		ch = line[cursor]
-		if self.check_ch(ch, exec_ch):
+		if self._check_ch(ch, exec_ch):
 			self.parse_exec(context, line, cursor)
 		elif ch == "*":
 			cursor += 1
@@ -314,12 +332,44 @@ class Parser:
 		cursor, _ = self.parse_literal_req(context, "as", line, cursor)
 		cursor, alias = self.parse_identifier_req(context, line, cursor)
 
-		self.trace(context, "load directive: {0} as {1}".format(path, alias))
-		context.module.template_imports[alias] = path
+		cursor, _ = self.parse_space(context, line, cursor)
+		params = []
+		cursor, params_text = self.parse_paren(context, "", line, cursor)
 
-	def parse_global(self, context, line, cursor):
+		param_map = {
+			"path" : path,
+			"abs" : False,
+			"directive_token" : self.directive_token,
+			"placeholder" : self.placeholder
+		}
+
+		if params_text:
+			for param in params_text.split(','):
+				pair = param.split('=')
+				key = pair[0].strip()
+				value = True
+
+				if len(pair) > 1:
+					value = pair[1].strip()
+
+				param_map[key] = value
+
+		load = Template_Load()
+		load.alias = alias
+		load.path = param_map["path"]
+		load.abs = param_map["abs"]
+		load.directive_token = param_map["directive_token"]
+		load.placeholder = param_map["placeholder"]
+
+		self.trace(context,
+			"load directive: {} as {}, abs({}), directive_token({}), placeholder({})".format(
+			load.path, alias, load.abs, load.directive_token, load.placeholder))
+
+		context.module.template_loads.append(load)
+
+	def parse_attribute(self, context, line, cursor):
 		if context.template:
-			self.warning(context, "global directives are not expected inside template definitions")
+			self.warning(context, "attribute directives are not expected inside template definitions")
 
 		cursor, alias = self.parse_identifier_req(context, line, cursor)
 		cursor, _ = self.parse_literal_req(context, "=", line, cursor)
@@ -327,7 +377,7 @@ class Parser:
 		cursor, _ = self.parse_space(context, line, cursor)
 		exp = line[cursor:]
 
-		self.trace(context, "global directive: {0} = {1}".format(alias, exp))
+		self.trace(context, "attribute directive: {0} = {1}".format(alias, exp))
 		context.module.variables[alias] = exp
 
 	def parse_template(self, context, line, cursor):
@@ -340,14 +390,18 @@ class Parser:
 		params = []
 		cusor, params_text = self.parse_paren(context, "", line, cursor)
 
+		varargs = False
+
 		if params_text:
-			params = params_text.split(',')
+			params = list(map(lambda s : s.strip(), params_text.split(',')))
+		else:
+			varargs = True
 
 		# validate prameter list
 		for param in params:
 			matched, _ = self.parse_identifier(context, param, 0)
 			if matched != len(param):
-				raise Parse_Exception(context, "invalid parameter list")
+				raise Parse_Exception(context, "invalid parameter identifier {}".format(param))
 			
 		if getattr(context.module, template_name, None):
 			raise Parse_Exception(context, "template {0} already defined".format(template_name))
@@ -358,7 +412,10 @@ class Parser:
 
 		self.trace(context, "template directive: {0}".format(template_name))
 		context.template = Template_Definition()
+		context.template.varargs = varargs
 		context.template.params = params
+		# store debug information, assume we don't have code that spans lines
+		context.template.definition_line = context.line
 		context.module.templates[template_name] = context.template
 
 	def parse_end(self, context, line, cursor):
@@ -426,7 +483,7 @@ class Parser:
 
 				placeholder = None
 			else:
-				if self.check_ch(ch, self.placeholder):
+				if self._check_ch(ch, self.placeholder):
 					placeholder = ch
 				else:
 					literal.write(ch)
@@ -438,7 +495,7 @@ class Parser:
 	def emit_comment(self, context, arguments):
 		self.trace(context, "comment directive " + arguments)
 		if context.template:
-			self.emit_code(context, "#" + arguments)
+			self.emit_code(context, "#" + arguments.rstrip())
 		else:
 			# emit nothing, ignore the comment
 			pass

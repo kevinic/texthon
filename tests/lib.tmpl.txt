@@ -1,19 +1,25 @@
 #import string as string
-#global author = "name"
+#attribute author = "name"
 
 #template tpl1(count)
 \#template this is not an actual template decl
 #!temp = 2
 #{for i in range(0, count):
-	count ${i}
+	count ${i} $>
 #	{if i == temp:
-	this should be $>
-a single line
+true
+#}
+#{ else:
+false
 #	}
 #}
 $author says:
 	temp($temp) * count($count) = ${temp * count}
 	let's test some escapes$$$$
-All ascii letters: ${string.ascii_letters}
+${tpl2(count = count)}
 #end template
 
+#template tpl2
+#!count = _kwargs["count"]
+ascii letters up to $count: ${string.ascii_letters[0:count]}
+#end template

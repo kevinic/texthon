@@ -1,0 +1,23 @@
+#attribute row = 1
+#attribute col = 1
+
+<html lang="en">
+	<head>
+		<title> Texthon Test </title>
+	</head>
+
+	<body>
+#template body
+		<table>
+#	{for r in range(0, row):
+			<tr>
+#		{for c in range(0, col):
+				<td>cell (%r, %c)</td>
+#		} # cell close
+			</tr> %>
+#	} # row close
+		</table>
+#end template
+	</body>
+</html>
+

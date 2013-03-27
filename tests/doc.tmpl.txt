@@ -1,0 +1,13 @@
+#* chain in the responders (also test load options)
+#load "base.tmpl.html" as base(directive_token=<!--#)
+
+#load "header.tmpl.html" as header (abs)
+#load "body.tmpl.html" as body (placeholder=%)
+#load "footer.tmpl.html" as footer
+
+#template main()
+#! responder = body(header, footer)
+#! responder.row = 5
+#! responder.col = 3
+${base.doc(responder)}
+#end template

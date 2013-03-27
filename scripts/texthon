@@ -4,13 +4,27 @@ import io
 import string
 import argparse
 
-parser = argparse.ArgumentParser(description="Texthon template engine")
+description = "Evaluates a template using the Texthon template engine"
+epilog = """Examples:
+
+texthon hello.tmpl.txt -P who=someone -P count=5
+texthon main.tmpl.txt -P -I lib1 -I lib2 -o output.txt
+"""
+
+parser = argparse.ArgumentParser(
+	formatter_class = argparse.RawDescriptionHelpFormatter,
+	description = description,
+	epilog = epilog
+)
 parser.add_argument('template', help='the template to evaluate')
-parser.add_argument('-I', '--include', nargs='*', action='append', default=[], help='include paths to resolve loads')
-parser.add_argument('-P', '--param', action='append', default=[], help='parameter defines (KEY=VALUE)')
+parser.add_argument('-I', '--include', action='append', default=[], help='include paths to resolve loads')
+parser.add_argument('-P', '--param', action='append', default=[],
+	help='parameter defines (KEY=VALUE). VALUE is automatically interpreted as a string or an integer')
+
 parser.add_argument('-pf', '--paramfile', default=None, help='parameter definition file')
 parser.add_argument('-v', '--verbose', action='store_true', default=False)
-parser.add_argument('-d', '--dump', action='store_true', default=False)
+parser.add_argument('-d', '--dump', action='store_true', default=False, help='dump the generated python code')
+parser.add_argument('-o', '--out', default=None, help='the output file')
 args = parser.parse_args()
 
 engine = texthon.Engine()
@@ -34,9 +48,15 @@ if args.paramfile:
 
 for param in args.param:
 	k, v = param.split('=')
+	if v.isdigit():
+		v = int(v)
 	params[k] = v
 
 module = engine.modules[path]
-output = module.main.execute(**params)
-print(output)
+output = module.main(**params)
+
+if args.out:
+	open(args.out, "w").write(output)
+else:
+	print(output)
 

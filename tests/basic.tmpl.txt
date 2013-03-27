@@ -1,8 +1,8 @@
 #* this is the main entry
 #load "lib.tmpl.txt" as lib
 
-#template main
-#!count = 5
+#template main(author, count)
+#!lib.author = author
 #* write the output directly
-#!_output.write(lib.tpl1.execute(count))
+#!_output.write(lib.tpl1(count))
 #end template

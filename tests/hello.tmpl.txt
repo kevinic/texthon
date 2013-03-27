@@ -1,0 +1,6 @@
+#template main(who, count)
+$who says: 
+#{for i in range(0, count):
+    hello world!
+#}
+#end template
