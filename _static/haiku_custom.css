@@ -1,0 +1,26 @@
+@import url("haiku.css");
+
+#forkme_banner {
+  display: block;
+  position: absolute;
+  top:0;
+  right: 10px;
+  z-index: 10;
+  padding: 10px 50px 10px 10px;
+  color: #fff;
+  background: url('blacktocat.png') #d0d0d0 no-repeat 95% 50%;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(0,0,0,.5);
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+div.header h2 {
+	text-transform: none;
+}
+
+body {
+    min-width: 35em;
+    max-width: 45em;
+}
+

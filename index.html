@@ -1,73 +1,160 @@
-<!DOCTYPE html>
-<html>
 
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Texthon : Half text, half Python." />
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Texthon</title>
-  </head>
-
-  <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/kevinic/texthon">View on GitHub</a>
-
-          <h1 id="project_title">Texthon</h1>
-          <h2 id="project_tagline">Half text, half Python.</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/kevinic/texthon/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/kevinic/texthon/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>What is Texthon</h3>
-
-<p>Texthon is a template engine that processes text files with Python code embedded.</p>
-
-<h3>Motivation and Philosophy</h3>
-
-<p>For a project at a game company, I relied on <a href="http://www.cheetahtemplate.org/">Cheetah templates</a> to generate C++ serialization code for game objects.  The results were great: it was easy to maintain; it generated efficient code; it was much less error-prone than hand writing serialization statements.</p>
-
-<p>I would continue on using Cheetah except for several annoyances:</p>
-
-<p>It was kind of a pain to distribute Cheetah along with my templates, especially since the Windows version perpetually bugs me about having Namemapper installed (a compiled extension that I ended up having to build myself).</p>
-
-<p><strong>Texthon aims to have few source files with only dependencies on standard libraries.  It should be easy to copy and distribute</strong></p>
-
-<p>I felt Cheetah was constantly getting in my way of organizing my templates in a simple, efficient manner.  The setup with #extend, #implement, &amp; etc. felt unnecessary to me.  Having worked with xslt before, I like the conceptual notion that a template definition simply transforms to a function definition: it takes some parameters and yields a textual output.</p>
-
-<p><strong>A Texthon template roughly corresponds to a Python function (with some caveats). Texthon organizes templates in a way that mirrors Python modules.</strong></p>
-
-<p>After a while, I realized I mostly loved having convenience of Python libraries while writing templates, and in fact Cheetah was getting in the way of that.  I want a template engine that lets me leverage Python statements and modules as much as possible.</p>
-
-<p><strong>Texthon avoids defining its own directives like #for, #if.  Instead it simply relies on Python statements for much of its logic control</strong></p>
-
-<p>Finally, Cheetah just doesn't seem to be very actively maintained anymore, with no support for Python 3.0+ in sight.</p>
-
-<p><strong>Texthon supports only Python 3.</strong></p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Texthon maintained by <a href="https://github.com/kevinic">kevinic</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
+    <title>Home &mdash; Texthon</title>
+    
+    <link rel="stylesheet" href="_static/haiku_custom.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="Texthon" href="#" />
+    <link rel="next" title="Documentation" href="documentation.html" /> 
+  </head>
+  <body>
+      <div class="header">
+	<a id="forkme_banner" href="https://github.com/kevinic">Follow on GitHub</a>
+	<h1 class="heading"><a href="#">
+	<span>Texthon</span></a></h1>
+	<h2 class="heading"><span>Half Text, Half Python</span></h2>
 
+
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="#">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="documentation.html">Documentation</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>Texthon is a library that processes templates written in a mix of text and
+Python.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="documentation.html">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+</ul>
+</div>
+<div class="section" id="getting-texthon">
+<h2>Getting Texthon<a class="headerlink" href="#getting-texthon" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://github.com/kevinic/texthon/">GitHub project page</a></div>
+<div class="line"><a class="reference external" href="https://github.com/kevinic/texthon/tarball/master">Source tar.gz</a></div>
+<div class="line"><a class="reference external" href="https://github.com/kevinic/texthon/zipball/master">Source zip</a></div>
+</div>
+<p>No prerequisites aside from <a class="reference external" href="http://www.python.org/">Python</a>.  Texthon is
+primarily developed using Python 3.3, but it&#8217;s 2.7 compatible as well.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Run <tt class="docutils literal"><span class="pre">setup.py</span> <span class="pre">install</span></tt> to install the library and the command line
+<a class="reference internal" href="documentation.html#cmd-script"><em>script</em></a> into your Python installation.  The scripts will be
+placed under the &#8220;Scripts&#8221; subdirectory.</p>
+<p>If only the library is desired, just copy the texthon subdirectory (where all
+the py sources live) to a path under PYTHONPATH.</p>
+</div>
+<div class="section" id="design-philosophy">
+<h2>Design Philosophy<a class="headerlink" href="#design-philosophy" title="Permalink to this headline">¶</a></h2>
+<p>There are a lot of Python template engines, why did I make this one?</p>
+<ul>
+<li><p class="first"><strong>Texthon lets you embed Python code directly.</strong></p>
+<p>Unlike libraries that sandbox template execution, Texthon does as little
+interpretation as possible of control logic, preferring instead to pass
+statements straight to the Python interpreter.</p>
+<p>To ease the debugging of templates, Texthon translates tracebacks to their
+original template source lines.  The command line script can also dump
+generated Python code for inspection.</p>
+</li>
+<li><p class="first"><strong>Texthon&#8217;s implementation is small and portable.</strong></p>
+<p>No reliance on non-standard libraries.  The core implementation is just a
+couple of files that the user can copy and deploy at will. Texthon runs under
+both Python 2 and 3.</p>
+</li>
+<li><p class="first"><strong>Texthon compiles templates into Python-like functions and organizes them into
+Python-like modules.</strong></p>
+<p>A template definition transforms into a callable function: it takes some
+parameters and returns a string.  Templates in a file are grouped together
+and accessed much like a Python module.</p>
+<p>One important feature is the support of <a class="reference internal" href="documentation.html#module-mixins"><em>mixins</em></a>.
+Users can mix template modules together to form a new module.  This allows
+the user to setup chains that&#8217;s almost like template inheritance.</p>
+</li>
+</ul>
+<p>The syntax of Texthon is inspired by <a class="reference external" href="http://www.cheetahtemplate.org/">Cheetah</a>, which saved me from the unspeakable
+agony of having to rely on C preprocessors for game object serialization code.
+If only it wouldn&#8217;t bug me about that stupid Namemapper extension all the time.</p>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>Here&#8217;s a snippet showing sample template text, along with the code
+that evaluates it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">texthon</span>
+
+<span class="n">template</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">#template main(who, count)</span>
+<span class="s">$who says:</span>
+<span class="s">#{for i in range(0, count):</span>
+<span class="s">    hello world!</span>
+<span class="s">#}</span>
+<span class="s">#end template</span>
+<span class="s">&quot;&quot;&quot;</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">texthon</span><span class="o">.</span><span class="n">Engine</span><span class="p">()</span>
+<span class="n">engine</span><span class="o">.</span><span class="n">load_text</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="s">&quot;@root&quot;</span><span class="p">)</span>
+<span class="n">engine</span><span class="o">.</span><span class="n">make</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">engine</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s">&quot;@root&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="s">&quot;someone&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>which prints the following output:</p>
+<div class="highlight-python"><pre>someone says:
+    hello world!
+    hello world!</pre>
+</div>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="#">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="documentation.html">Documentation</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2013, Kevin Lin.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
   </body>
 </html>
