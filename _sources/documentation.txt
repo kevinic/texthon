@@ -50,11 +50,12 @@ Invoke ``texthon --help`` for documentation on the script parameters.
 Samples
 ===========
 
-The tests directory contains sample templates.  They are:
+The `tests directory <https://github.com/kevinic/texthon/tree/master/tests>`_
+contains sample templates.  They are:
 
-    * `helloworld <http://todo>`_ - a minimal example
-    * `basic <http://todo>`_ - shows basic directive use and template module loads
-    * `html <http://todo>`_ - shows the use of template mixins and parser parameters
+    * `hello <https://github.com/kevinic/texthon/tree/master/tests/hello>`_ - a minimal example
+    * `basic <http://github.com/kevinic/texthon/tree/master/tests/basic>`_ - shows basic directive use and template module loads
+    * `html <http://github.com/kevinic/texthon/tree/master/tests/html>`_ - shows the use of template mixins and parser parameters
 
 Directives
 ============
