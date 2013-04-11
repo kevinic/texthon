@@ -112,31 +112,26 @@ If only it wouldn&#8217;t bug me about that stupid Namemapper extension all the 
 </div>
 <div class="section" id="example">
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-<p>Here&#8217;s a snippet showing sample template text, along with the code
-that evaluates it:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">texthon</span>
-
-<span class="n">template</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
-<span class="s">#template main(who, count)</span>
-<span class="s">$who says:</span>
-<span class="s">#{for i in range(0, count):</span>
-<span class="s">    hello world!</span>
-<span class="s">#}</span>
-<span class="s">#end template</span>
-<span class="s">&quot;&quot;&quot;</span>
-
-<span class="n">engine</span> <span class="o">=</span> <span class="n">texthon</span><span class="o">.</span><span class="n">Engine</span><span class="p">()</span>
-<span class="n">engine</span><span class="o">.</span><span class="n">load_text</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="s">&quot;@root&quot;</span><span class="p">)</span>
-<span class="n">engine</span><span class="o">.</span><span class="n">make</span><span class="p">()</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">engine</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s">&quot;@root&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="s">&quot;someone&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-</pre></div>
+<p>Here&#8217;s a simple template file, <tt class="docutils literal"><span class="pre">hello.tmpl.txt</span></tt></p>
+<div class="highlight-python"><pre>#template main(who, count)
+$who says:
+#{for i in range(0, count):
+    hello world!
+#}
+#end template</pre>
 </div>
-<p>which prints the following output:</p>
+<p>using the script <tt class="docutils literal"><span class="pre">texthon</span></tt> with the following parameters:</p>
+<div class="highlight-python"><pre>texthon hello.tmpl.txt -P who=someone -P count=2</pre>
+</div>
+<p>the following output is generated:</p>
 <div class="highlight-python"><pre>someone says:
     hello world!
     hello world!</pre>
 </div>
+<p>For an example that&#8217;s closer to a real-world scenario, <a class="reference external" href="http://github.com/kevinic/texthon/tree/master/tests/cpp">these templates</a>
+demonstrate the use of Texthon to write C++ object reflection code: a task that
+would normally require tedious copy-and-pasting and/or C++ template/macro black
+magic.</p>
 </div>
 </div>
 

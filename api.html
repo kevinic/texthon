@@ -59,13 +59,13 @@
 <dd><p>Primary entrance for the Texthon library.  This provides methods
 to load, compile, and evaluate templates.</p>
 <p>Use the <tt class="docutils literal"><span class="pre">modules</span></tt> attribute (dict) to locate compiled or parsed modules.</p>
-<dl class="function">
+<dl class="method">
 <dt id="texthon.engine.Engine.add_includes">
-<tt class="descname">add_includes</tt><big>(</big><em>self</em>, <em>includes</em><big>)</big><a class="headerlink" href="#texthon.engine.Engine.add_includes" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">add_includes</tt><big>(</big><em>includes</em><big>)</big><a class="headerlink" href="#texthon.engine.Engine.add_includes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a list of include paths to resolve load directives with.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="method">
 <dt id="texthon.engine.Engine.load_file">
 <tt class="descname">load_file</tt><big>(</big><em>self</em>, <em>path</em>, <em>parser = Parser()</em><big>)</big><a class="headerlink" href="#texthon.engine.Engine.load_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads a template module defined in a file.</p>
@@ -86,7 +86,7 @@ to load, compile, and evaluate templates.</p>
 </table>
 </dd></dl>
 
-<dl class="function">
+<dl class="method">
 <dt id="texthon.engine.Engine.load_module">
 <tt class="descname">load_module</tt><big>(</big><em>self</em>, <em>text</em>, <em>name</em>, <em>parser = Parser()</em><big>)</big><a class="headerlink" href="#texthon.engine.Engine.load_module" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads a template module defined from an input stream</p>
@@ -109,7 +109,7 @@ to load, compile, and evaluate templates.</p>
 </table>
 </dd></dl>
 
-<dl class="function">
+<dl class="method">
 <dt id="texthon.engine.Engine.load_text">
 <tt class="descname">load_text</tt><big>(</big><em>self</em>, <em>text</em>, <em>name</em>, <em>parser = Parser()</em><big>)</big><a class="headerlink" href="#texthon.engine.Engine.load_text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads a template module defined in a string.</p>
@@ -132,17 +132,17 @@ to load, compile, and evaluate templates.</p>
 </table>
 </dd></dl>
 
-<dl class="function">
+<dl class="method">
 <dt id="texthon.engine.Engine.make">
-<tt class="descname">make</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#texthon.engine.Engine.make" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">make</tt><big>(</big><big>)</big><a class="headerlink" href="#texthon.engine.Engine.make" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compile all loaded modules.</p>
 <p>After the function is called, the entire <tt class="docutils literal"><span class="pre">modules</span></tt> dictionary is
 replaced with callable modules.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="method">
 <dt id="texthon.engine.Engine.set_verbose">
-<tt class="descname">set_verbose</tt><big>(</big><em>self</em>, <em>verbose</em><big>)</big><a class="headerlink" href="#texthon.engine.Engine.set_verbose" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">set_verbose</tt><big>(</big><em>verbose</em><big>)</big><a class="headerlink" href="#texthon.engine.Engine.set_verbose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set to true for additional debug output.</p>
 </dd></dl>
 
@@ -170,9 +170,9 @@ callable object that returns a shallow copy of itself on return.</p>
 <dt id="texthon.parser.Module_Definition">
 <em class="property">class </em><tt class="descclassname">texthon.parser.</tt><tt class="descname">Module_Definition</tt><a class="headerlink" href="#texthon.parser.Module_Definition" title="Permalink to this definition">¶</a></dt>
 <dd><p>A parsed template module.</p>
-<dl class="function">
+<dl class="method">
 <dt id="texthon.parser.Module_Definition.dump">
-<tt class="descname">dump</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#texthon.parser.Module_Definition.dump" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">dump</tt><big>(</big><big>)</big><a class="headerlink" href="#texthon.parser.Module_Definition.dump" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dump detailed module information including generated function code</p>
 </dd></dl>
 
@@ -188,12 +188,63 @@ callable object that returns a shallow copy of itself on return.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>directive_token</strong> &#8211; the prefix that indicates the start of a directive line.</li>
-<li><strong>placeholder</strong> &#8211; the character that indicates the start of a placeholder</li>
+<li><strong>sub_ch</strong> &#8211; the character that indicates the start of a placeholder</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<span class="target" id="module-texthon.utils"><span id="utility-module"></span></span><dl class="class">
+<dt id="texthon.utils.Indent">
+<em class="property">class </em><tt class="descclassname">texthon.utils.</tt><tt class="descname">Indent</tt><big>(</big><em>columns=4</em>, <em>use_tab=True</em><big>)</big><a class="headerlink" href="#texthon.utils.Indent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility class for controlling text indentation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>columns</strong> &#8211; the number of columns per indent level</li>
+<li><strong>use_tab</strong> &#8211; whether to use tab characters for formatting</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="texthon.utils.Indent.deindent">
+<tt class="descname">deindent</tt><big>(</big><em>block</em>, <em>level=1</em><big>)</big><a class="headerlink" href="#texthon.utils.Indent.deindent" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a new block where each line has the specified level of
+indent removed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="texthon.utils.Indent.get_column">
+<tt class="descname">get_column</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#texthon.utils.Indent.get_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the number of columns the line has for indent</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="texthon.utils.Indent.indent">
+<tt class="descname">indent</tt><big>(</big><em>block</em>, <em>level=1</em><big>)</big><a class="headerlink" href="#texthon.utils.Indent.indent" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a new block where each line has additional indent of the
+specified level</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="texthon.utils.Indent.normalize">
+<tt class="descname">normalize</tt><big>(</big><em>block</em><big>)</big><a class="headerlink" href="#texthon.utils.Indent.normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns a new block where each line is normalized with proper
+tabs or spaces, preserving the indent column</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="texthon.utils.Indent.set_column">
+<tt class="descname">set_column</tt><big>(</big><em>line</em>, <em>col</em><big>)</big><a class="headerlink" href="#texthon.utils.Indent.set_column" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the line with indent to the specified column</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>

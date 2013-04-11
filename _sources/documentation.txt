@@ -56,6 +56,8 @@ contains sample templates.  They are:
     * `hello <https://github.com/kevinic/texthon/tree/master/tests/hello>`_ - a minimal example
     * `basic <http://github.com/kevinic/texthon/tree/master/tests/basic>`_ - shows basic directive use and template module loads
     * `html <http://github.com/kevinic/texthon/tree/master/tests/html>`_ - shows the use of template mixins and parser parameters
+    * `nest <http://github.com/kevinic/texthon/tree/master/tests/nest>`_ - using the :ref:`utility class <utility_classes>` to control indentation
+    * `cpp <http://github.com/kevinic/texthon/tree/master/tests/cpp>`_ - templates that generate c++ structs and type information
 
 Directives
 ============
@@ -63,15 +65,16 @@ Directives
 .. highlight:: none
 
 .. productionlist::
-    directive: dir_prefix dir_command dir_statement
-    dir_command: "`* <comment_directive>`" | "!" | "{" | "}" | dir_keyword
-    dir_keyword: "load" | "import" | "attribute" | "template" | "end"
+    directive: <dir_prefix> dir_statement
+    dir_statement: `comment` | exec_stmt | keyword_stmt
+    exec_stmt: `single_exec` | `compound_begin` | `compound_end`
+    keyword_stmt: `load_stmt` | `import_stmt` | `attribute_stmt` | `template_stmt` | `end_stmt`
 
 Directives are Texthon control commands and do not affect the output text
 directly. A directive is issued on its own line, beginning with the directive
 prefix token. The rest of the documentation assumes '#' is the prefix.
 
-Prepend '\' to escape the token.  Escapes are only processed at the beginning
+Prepend '\\' to escape the token.  Escapes are only processed at the beginning
 of the line.
 
 Directives operate either in the module scope or the function scope.  Only
@@ -99,9 +102,10 @@ lines.
 Comment
 -----------
 
-Module and function scope::
+Module and function scope:
 
-    #* <comment>
+.. productionlist::
+    comment: "*" <comment>
 
 Comments are ignored at the module scope, and emitted as Python #
 comments at the function scope to aid debugging.
@@ -115,9 +119,10 @@ Example::
 Import
 -----------
 
-Module scope::
+Module scope:
 
-    #import <module> as <alias>
+.. productionlist::
+    import_stmt: "import" <module> "as" <alias>
 
 Import a Python module under <alias>.  The alias is required.  Once imported,
 the alias will be available for all definitions in the module.
@@ -132,9 +137,10 @@ Example::
 Load
 ------------
 
-Module scope::
+Module scope:
 
-    #load <path> as <alias> [(attributes)]
+.. productionlist::
+    load_stmt: "load" <path> "as" <alias> ["(" <attributes> ")"]
 
 Load another template module in the file specified by <alias>.  <path> is
 resolved relative to the directory of the current file and the list of
@@ -153,7 +159,7 @@ following attributes are available:
 Example::
 
     #load "lib/file.tmpl" as lib
-    #load "lib/file.tmpl.html" as html_lib (directive_token = <!--)
+    #load "lib/file.tmpl.html" as html_lib (directive_token = "<!--")
     #load "lib/file.tmpl" as lib (abs)
 
 .. _attribute_directive:
@@ -161,9 +167,10 @@ Example::
 Attribute
 ----------------
 
-Module scope::
+Module scope:
 
-    #attribute <name> <expression>
+.. productionlist::
+    attribute_stmt: "attribute" <name> "=" <expression>
 
 Declare a module level variable <name> and assign the result of <expression>.
 
@@ -185,10 +192,11 @@ Example::
 Template Function
 ------------------
 
-Module scope::
+Module scope:
 
-    #template <name>[(parameters)]
-    #end template
+.. productionlist::
+    template_stmt: "template" <name> ["(" <parameters> ")"]
+    end_stmt: "end" "template"
 
 Define a template function within the current module.  Anything between
 ``#template`` and ``#end template`` are evaluated in function scope.
@@ -213,9 +221,10 @@ Example::
 Single Statement
 -----------------
 
-Function scope::
+Function scope:
 
-    #! <python_statement>
+.. productionlist::
+    single_exec: "!" <python_statement>
 
 The entire <python_statement> is copied over to the generated template function
 code (with indentation stripped).  Write the statement as if it were inside a
@@ -236,10 +245,11 @@ For builtin variables available to the execution statement, refer
 Compound Statement
 -------------------
 
-Function scope::
+Function scope:
 
-    #{ <python_compound_statement>
-    #}
+.. productionlist::
+    compound_begin: "{" <python_statement>
+    compound_end: "}"
 
 Compound statements are useful for Python control logic such as ``if``, 
 ``for``, and ``while``.  Text lines and other execution statements between
@@ -315,24 +325,44 @@ For complex substituion, surround a Python expression with brackets.
 <python_expression> will be evaluated using Python ``eval``, and the result
 is used for the substitution.
 
-'\' can be used within the expression to escape the ending bracket '}',
+'\\' can be used within the expression to escape the ending bracket '}',
 
 Example::
 
     the sum of the values is ${a + b}
     lookup result: ${values[key]}
 
-Slurp Placeholder
+Slurp Placeholders
 ---------------------
 
 ::
 
     $<
+    $>
 
-A special place holder, ``$<``, is used to slurp whatever text that comes
-between it and the next line.  It's useful for eating up extraneous newlines.
+Two special place holders, ``$<`` and ``$>`` , are used to discard parts of the
+text line; they are useful for whitespace control.
 
-For instance::
+Anything in the text line before ``$<`` is discarded.
+
+Example::
+
+    text line 0
+        $<text line 1
+            $<text line 2
+
+will generate the following output::
+
+    text line 0
+    text line 1
+    text line 2
+
+This allows you some flexibility in indenting the source template lines, making
+them more readable.
+
+Anything in the text line after ``$>`` is discarded.
+
+Example::
 
 	this is the end of the file
 	#end template
@@ -340,7 +370,7 @@ For instance::
 will generate a newline after "file" since it's considered part of the
 textline, whereas::
 
-    this is the end of the file$<
+    this is the end of the file$>
     #end template
 
 will ensure that no newline occurrs at the end of the output.
@@ -353,7 +383,7 @@ Template Execution
 When a template function executes, it has a set of variables defined on entry.
 Here they are in definition order:
 
-    * :ref:`python import <import_directive>` aliases
+    * :ref:`python import <import_directive>` aliases, including the :ref:`_utils <utility_classes>` autoimport
     * :ref:`template load <load_directive>` aliases
     * module :ref:`attributes <attribute_directive>`
     * other :ref:`template function <template_directive>` names within the same module
@@ -405,3 +435,16 @@ available in any of the three modules.
 
 See the :ref:`html sample <test_samples>` for example usage.
 
+.. _utility_classes:
+
+Utility Classes
+================
+
+Texthon provides some utility classes/functions to aid template formatting.
+They are automatically imported under the ``_utils`` module alias.
+
+See the `nest <http://github.com/kevinic/texthon/tree/master/tests/nest>`_
+sample for templates that rely on the ``Indent`` class to dynamically
+control whitespace.
+
+:ref:`More details <utility_module>`.

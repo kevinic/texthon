@@ -55,38 +55,39 @@
         
         
   <div class="section" id="documentation">
-<h1><a class="toc-backref" href="#id3">Documentation</a><a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id5">Documentation</a><a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
 <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#documentation" id="id3">Documentation</a><ul>
-<li><a class="reference internal" href="#overview" id="id4">Overview</a></li>
-<li><a class="reference internal" href="#command-line-script" id="id5">Command Line Script</a></li>
-<li><a class="reference internal" href="#samples" id="id6">Samples</a></li>
-<li><a class="reference internal" href="#directives" id="id7">Directives</a><ul>
-<li><a class="reference internal" href="#comment" id="id8">Comment</a></li>
-<li><a class="reference internal" href="#import" id="id9">Import</a></li>
-<li><a class="reference internal" href="#load" id="id10">Load</a></li>
-<li><a class="reference internal" href="#attribute" id="id11">Attribute</a></li>
-<li><a class="reference internal" href="#template-function" id="id12">Template Function</a></li>
-<li><a class="reference internal" href="#single-statement" id="id13">Single Statement</a></li>
-<li><a class="reference internal" href="#compound-statement" id="id14">Compound Statement</a></li>
+<li><a class="reference internal" href="#documentation" id="id5">Documentation</a><ul>
+<li><a class="reference internal" href="#overview" id="id6">Overview</a></li>
+<li><a class="reference internal" href="#command-line-script" id="id7">Command Line Script</a></li>
+<li><a class="reference internal" href="#samples" id="id8">Samples</a></li>
+<li><a class="reference internal" href="#directives" id="id9">Directives</a><ul>
+<li><a class="reference internal" href="#comment" id="id10">Comment</a></li>
+<li><a class="reference internal" href="#import" id="id11">Import</a></li>
+<li><a class="reference internal" href="#load" id="id12">Load</a></li>
+<li><a class="reference internal" href="#attribute" id="id13">Attribute</a></li>
+<li><a class="reference internal" href="#template-function" id="id14">Template Function</a></li>
+<li><a class="reference internal" href="#single-statement" id="id15">Single Statement</a></li>
+<li><a class="reference internal" href="#compound-statement" id="id16">Compound Statement</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#text-line" id="id15">Text Line</a><ul>
-<li><a class="reference internal" href="#identifier-placeholder" id="id16">Identifier Placeholder</a></li>
-<li><a class="reference internal" href="#expression-placeholder" id="id17">Expression Placeholder</a></li>
-<li><a class="reference internal" href="#slurp-placeholder" id="id18">Slurp Placeholder</a></li>
+<li><a class="reference internal" href="#text-line" id="id17">Text Line</a><ul>
+<li><a class="reference internal" href="#identifier-placeholder" id="id18">Identifier Placeholder</a></li>
+<li><a class="reference internal" href="#expression-placeholder" id="id19">Expression Placeholder</a></li>
+<li><a class="reference internal" href="#slurp-placeholders" id="id20">Slurp Placeholders</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#template-execution" id="id19">Template Execution</a></li>
-<li><a class="reference internal" href="#template-modules" id="id20">Template Modules</a></li>
+<li><a class="reference internal" href="#template-execution" id="id21">Template Execution</a></li>
+<li><a class="reference internal" href="#template-modules" id="id22">Template Modules</a></li>
+<li><a class="reference internal" href="#utility-classes" id="id23">Utility Classes</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="overview">
-<h2><a class="toc-backref" href="#id4">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">Overview</a><a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
 <p>Texthon compiles a template file into a template module.  Each template
 module contains one or more template functions.</p>
 <p>During the parsing stage, a template file is processed line by line, where each
@@ -113,13 +114,13 @@ The result of the call is a Python string.</p>
 </div>
 </div>
 <div class="section" id="command-line-script">
-<span id="cmd-script"></span><h2><a class="toc-backref" href="#id5">Command Line Script</a><a class="headerlink" href="#command-line-script" title="Permalink to this headline">¶</a></h2>
+<span id="cmd-script"></span><h2><a class="toc-backref" href="#id7">Command Line Script</a><a class="headerlink" href="#command-line-script" title="Permalink to this headline">¶</a></h2>
 <p>A command line script is available to evaluate template files without having
 to write your own Python code.</p>
 <p>Invoke <tt class="docutils literal"><span class="pre">texthon</span> <span class="pre">--help</span></tt> for documentation on the script parameters.</p>
 </div>
 <div class="section" id="samples">
-<span id="test-samples"></span><h2><a class="toc-backref" href="#id6">Samples</a><a class="headerlink" href="#samples" title="Permalink to this headline">¶</a></h2>
+<span id="test-samples"></span><h2><a class="toc-backref" href="#id8">Samples</a><a class="headerlink" href="#samples" title="Permalink to this headline">¶</a></h2>
 <p>The <a class="reference external" href="https://github.com/kevinic/texthon/tree/master/tests">tests directory</a>
 contains sample templates.  They are:</p>
 <blockquote>
@@ -127,20 +128,23 @@ contains sample templates.  They are:</p>
 <li><a class="reference external" href="https://github.com/kevinic/texthon/tree/master/tests/hello">hello</a> - a minimal example</li>
 <li><a class="reference external" href="http://github.com/kevinic/texthon/tree/master/tests/basic">basic</a> - shows basic directive use and template module loads</li>
 <li><a class="reference external" href="http://github.com/kevinic/texthon/tree/master/tests/html">html</a> - shows the use of template mixins and parser parameters</li>
+<li><a class="reference external" href="http://github.com/kevinic/texthon/tree/master/tests/nest">nest</a> - using the <a class="reference internal" href="#utility-classes"><em>utility class</em></a> to control indentation</li>
+<li><a class="reference external" href="http://github.com/kevinic/texthon/tree/master/tests/cpp">cpp</a> - templates that generate c++ structs and type information</li>
 </ul>
 </div></blockquote>
 </div>
 <div class="section" id="directives">
-<h2><a class="toc-backref" href="#id7">Directives</a><a class="headerlink" href="#directives" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">Directives</a><a class="headerlink" href="#directives" title="Permalink to this headline">¶</a></h2>
 <pre>
-<strong id="grammar-token-directive">directive  </strong> ::=  dir_prefix dir_command dir_statement
-<strong id="grammar-token-dir_command">dir_command</strong> ::=  &quot;`* &lt;comment_directive&gt;`&quot; | &quot;!&quot; | &quot;{&quot; | &quot;}&quot; | dir_keyword
-<strong id="grammar-token-dir_keyword">dir_keyword</strong> ::=  &quot;load&quot; | &quot;import&quot; | &quot;attribute&quot; | &quot;template&quot; | &quot;end&quot;
+<strong id="grammar-token-directive">directive    </strong> ::=  &lt;dir_prefix&gt; dir_statement
+<strong id="grammar-token-dir_statement">dir_statement</strong> ::=  <a class="reference internal" href="#grammar-token-comment"><tt class="xref docutils literal"><span class="pre">comment</span></tt></a> | exec_stmt | keyword_stmt
+<strong id="grammar-token-exec_stmt">exec_stmt    </strong> ::=  <a class="reference internal" href="#grammar-token-single_exec"><tt class="xref docutils literal"><span class="pre">single_exec</span></tt></a> | <a class="reference internal" href="#grammar-token-compound_begin"><tt class="xref docutils literal"><span class="pre">compound_begin</span></tt></a> | <a class="reference internal" href="#grammar-token-compound_end"><tt class="xref docutils literal"><span class="pre">compound_end</span></tt></a>
+<strong id="grammar-token-keyword_stmt">keyword_stmt </strong> ::=  <a class="reference internal" href="#grammar-token-load_stmt"><tt class="xref docutils literal"><span class="pre">load_stmt</span></tt></a> | <a class="reference internal" href="#grammar-token-import_stmt"><tt class="xref docutils literal"><span class="pre">import_stmt</span></tt></a> | <a class="reference internal" href="#grammar-token-attribute_stmt"><tt class="xref docutils literal"><span class="pre">attribute_stmt</span></tt></a> | <a class="reference internal" href="#grammar-token-template_stmt"><tt class="xref docutils literal"><span class="pre">template_stmt</span></tt></a> | <a class="reference internal" href="#grammar-token-end_stmt"><tt class="xref docutils literal"><span class="pre">end_stmt</span></tt></a>
 </pre>
 <p>Directives are Texthon control commands and do not affect the output text
 directly. A directive is issued on its own line, beginning with the directive
 prefix token. The rest of the documentation assumes &#8216;#&#8217; is the prefix.</p>
-<p>Prepend &#8216;&#8217; to escape the token.  Escapes are only processed at the beginning
+<p>Prepend &#8216;\&#8217; to escape the token.  Escapes are only processed at the beginning
 of the line.</p>
 <p>Directives operate either in the module scope or the function scope.  Only
 function scope directives should be issued between #template and #end template
@@ -162,11 +166,11 @@ ignored, so you can close out the line with an xml comment end.</p>
 </div>
 </div>
 <div class="section" id="comment">
-<span id="comment-directive"></span><h3><a class="toc-backref" href="#id8">Comment</a><a class="headerlink" href="#comment" title="Permalink to this headline">¶</a></h3>
+<span id="comment-directive"></span><h3><a class="toc-backref" href="#id10">Comment</a><a class="headerlink" href="#comment" title="Permalink to this headline">¶</a></h3>
 <p>Module and function scope:</p>
-<div class="highlight-none"><div class="highlight"><pre>#* &lt;comment&gt;
-</pre></div>
-</div>
+<pre>
+<strong id="grammar-token-comment">comment</strong> ::=  &quot;*&quot; &lt;comment&gt;
+</pre>
 <p>Comments are ignored at the module scope, and emitted as Python #
 comments at the function scope to aid debugging.</p>
 <p>Example:</p>
@@ -175,11 +179,11 @@ comments at the function scope to aid debugging.</p>
 </div>
 </div>
 <div class="section" id="import">
-<span id="import-directive"></span><h3><a class="toc-backref" href="#id9">Import</a><a class="headerlink" href="#import" title="Permalink to this headline">¶</a></h3>
+<span id="import-directive"></span><h3><a class="toc-backref" href="#id11">Import</a><a class="headerlink" href="#import" title="Permalink to this headline">¶</a></h3>
 <p>Module scope:</p>
-<div class="highlight-none"><div class="highlight"><pre>#import &lt;module&gt; as &lt;alias&gt;
-</pre></div>
-</div>
+<pre>
+<strong id="grammar-token-import_stmt">import_stmt</strong> ::=  &quot;import&quot; &lt;module&gt; &quot;as&quot; &lt;alias&gt;
+</pre>
 <p>Import a Python module under &lt;alias&gt;.  The alias is required.  Once imported,
 the alias will be available for all definitions in the module.</p>
 <p>Example:</p>
@@ -189,11 +193,11 @@ the alias will be available for all definitions in the module.</p>
 </div>
 </div>
 <div class="section" id="load">
-<span id="load-directive"></span><h3><a class="toc-backref" href="#id10">Load</a><a class="headerlink" href="#load" title="Permalink to this headline">¶</a></h3>
+<span id="load-directive"></span><h3><a class="toc-backref" href="#id12">Load</a><a class="headerlink" href="#load" title="Permalink to this headline">¶</a></h3>
 <p>Module scope:</p>
-<div class="highlight-none"><div class="highlight"><pre>#load &lt;path&gt; as &lt;alias&gt; [(attributes)]
-</pre></div>
-</div>
+<pre>
+<strong id="grammar-token-load_stmt">load_stmt</strong> ::=  &quot;load&quot; &lt;path&gt; &quot;as&quot; &lt;alias&gt; [&quot;(&quot; &lt;attributes&gt; &quot;)&quot;]
+</pre>
 <p>Load another template module in the file specified by &lt;alias&gt;.  &lt;path&gt; is
 resolved relative to the directory of the current file and the list of
 include paths added by <tt class="docutils literal"><span class="pre">engine.add_includes</span></tt>.</p>
@@ -211,17 +215,17 @@ placeholders.  Same as the current file by default.</li>
 </div></blockquote>
 <p>Example:</p>
 <div class="highlight-none"><div class="highlight"><pre>#load &quot;lib/file.tmpl&quot; as lib
-#load &quot;lib/file.tmpl.html&quot; as html_lib (directive_token = &lt;!--)
+#load &quot;lib/file.tmpl.html&quot; as html_lib (directive_token = &quot;&lt;!--&quot;)
 #load &quot;lib/file.tmpl&quot; as lib (abs)
 </pre></div>
 </div>
 </div>
 <div class="section" id="attribute">
-<span id="attribute-directive"></span><h3><a class="toc-backref" href="#id11">Attribute</a><a class="headerlink" href="#attribute" title="Permalink to this headline">¶</a></h3>
+<span id="attribute-directive"></span><h3><a class="toc-backref" href="#id13">Attribute</a><a class="headerlink" href="#attribute" title="Permalink to this headline">¶</a></h3>
 <p>Module scope:</p>
-<div class="highlight-none"><div class="highlight"><pre>#attribute &lt;name&gt; &lt;expression&gt;
-</pre></div>
-</div>
+<pre>
+<strong id="grammar-token-attribute_stmt">attribute_stmt</strong> ::=  &quot;attribute&quot; &lt;name&gt; &quot;=&quot; &lt;expression&gt;
+</pre>
 <p>Declare a module level variable &lt;name&gt; and assign the result of &lt;expression&gt;.</p>
 <p>Within the same module, an attribute can be read by a template function without
 any qualification. To assign a new value, however, you must go through the
@@ -237,12 +241,12 @@ builtin variable <tt class="docutils literal"><span class="pre">_module</span></
 </div>
 </div>
 <div class="section" id="template-function">
-<span id="template-directive"></span><h3><a class="toc-backref" href="#id12">Template Function</a><a class="headerlink" href="#template-function" title="Permalink to this headline">¶</a></h3>
+<span id="template-directive"></span><h3><a class="toc-backref" href="#id14">Template Function</a><a class="headerlink" href="#template-function" title="Permalink to this headline">¶</a></h3>
 <p>Module scope:</p>
-<div class="highlight-none"><div class="highlight"><pre>#template &lt;name&gt;[(parameters)]
-#end template
-</pre></div>
-</div>
+<pre>
+<strong id="grammar-token-template_stmt">template_stmt</strong> ::=  &quot;template&quot; &lt;name&gt; [&quot;(&quot; &lt;parameters&gt; &quot;)&quot;]
+<strong id="grammar-token-end_stmt">end_stmt     </strong> ::=  &quot;end&quot; &quot;template&quot;
+</pre>
 <p>Define a template function within the current module.  Anything between
 <tt class="docutils literal"><span class="pre">#template</span></tt> and <tt class="docutils literal"><span class="pre">#end</span> <span class="pre">template</span></tt> are evaluated in function scope.</p>
 <p>An optional list of identifiers can be provided as parameters.  Without the
@@ -261,11 +265,11 @@ $title by author $author
 </div>
 </div>
 <div class="section" id="single-statement">
-<span id="single-exec-directive"></span><h3><a class="toc-backref" href="#id13">Single Statement</a><a class="headerlink" href="#single-statement" title="Permalink to this headline">¶</a></h3>
+<span id="single-exec-directive"></span><h3><a class="toc-backref" href="#id15">Single Statement</a><a class="headerlink" href="#single-statement" title="Permalink to this headline">¶</a></h3>
 <p>Function scope:</p>
-<div class="highlight-none"><div class="highlight"><pre>#! &lt;python_statement&gt;
-</pre></div>
-</div>
+<pre>
+<strong id="grammar-token-single_exec">single_exec</strong> ::=  &quot;!&quot; &lt;python_statement&gt;
+</pre>
 <p>The entire &lt;python_statement&gt; is copied over to the generated template function
 code (with indentation stripped).  Write the statement as if it were inside a
 normal Python function.</p>
@@ -280,12 +284,12 @@ normal Python function.</p>
 <a class="reference internal" href="#template-execution"><em>here</em></a>.</p>
 </div>
 <div class="section" id="compound-statement">
-<span id="compound-exec-directive"></span><h3><a class="toc-backref" href="#id14">Compound Statement</a><a class="headerlink" href="#compound-statement" title="Permalink to this headline">¶</a></h3>
+<span id="compound-exec-directive"></span><h3><a class="toc-backref" href="#id16">Compound Statement</a><a class="headerlink" href="#compound-statement" title="Permalink to this headline">¶</a></h3>
 <p>Function scope:</p>
-<div class="highlight-none"><div class="highlight"><pre>#{ &lt;python_compound_statement&gt;
-#}
-</pre></div>
-</div>
+<pre>
+<strong id="grammar-token-compound_begin">compound_begin</strong> ::=  &quot;{&quot; &lt;python_statement&gt;
+<strong id="grammar-token-compound_end">compound_end  </strong> ::=  &quot;}&quot;
+</pre>
 <p>Compound statements are useful for Python control logic such as <tt class="docutils literal"><span class="pre">if</span></tt>,
 <tt class="docutils literal"><span class="pre">for</span></tt>, and <tt class="docutils literal"><span class="pre">while</span></tt>.  Text lines and other execution statements between
 <tt class="docutils literal"><span class="pre">#{</span></tt> and <tt class="docutils literal"><span class="pre">#}</span></tt> are considered part of the compound block.</p>
@@ -305,7 +309,7 @@ setting is false!
 </div>
 </div>
 <div class="section" id="text-line">
-<h2><a class="toc-backref" href="#id15">Text Line</a><a class="headerlink" href="#text-line" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17">Text Line</a><a class="headerlink" href="#text-line" title="Permalink to this headline">¶</a></h2>
 <p>Text lines are appended to the evaluation output after placeholder
 substitution is performed.  All placeholders begin with the placeholder
 character (by default &#8216;$&#8217;).  Placeholders can be escaped by repeating the
@@ -333,7 +337,7 @@ The function signature and brackets are ignored, but they tell your editor
 how to highlight the entire file, and give context to your template.</p>
 </div>
 <div class="section" id="identifier-placeholder">
-<h3><a class="toc-backref" href="#id16">Identifier Placeholder</a><a class="headerlink" href="#identifier-placeholder" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id18">Identifier Placeholder</a><a class="headerlink" href="#identifier-placeholder" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-none"><div class="highlight"><pre>$&lt;identifier&gt;
 </pre></div>
 </div>
@@ -345,35 +349,52 @@ the name.</p>
 </div>
 </div>
 <div class="section" id="expression-placeholder">
-<h3><a class="toc-backref" href="#id17">Expression Placeholder</a><a class="headerlink" href="#expression-placeholder" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id19">Expression Placeholder</a><a class="headerlink" href="#expression-placeholder" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-none"><div class="highlight"><pre>${&lt;python_expression&gt;}
 </pre></div>
 </div>
 <p>For complex substituion, surround a Python expression with brackets.
 &lt;python_expression&gt; will be evaluated using Python <tt class="docutils literal"><span class="pre">eval</span></tt>, and the result
 is used for the substitution.</p>
-<p>&#8216;&#8217; can be used within the expression to escape the ending bracket &#8216;}&#8217;,</p>
+<p>&#8216;\&#8217; can be used within the expression to escape the ending bracket &#8216;}&#8217;,</p>
 <p>Example:</p>
 <div class="highlight-none"><div class="highlight"><pre>the sum of the values is ${a + b}
 lookup result: ${values[key]}
 </pre></div>
 </div>
 </div>
-<div class="section" id="slurp-placeholder">
-<h3><a class="toc-backref" href="#id18">Slurp Placeholder</a><a class="headerlink" href="#slurp-placeholder" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="slurp-placeholders">
+<h3><a class="toc-backref" href="#id20">Slurp Placeholders</a><a class="headerlink" href="#slurp-placeholders" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-none"><div class="highlight"><pre>$&lt;
+$&gt;
 </pre></div>
 </div>
-<p>A special place holder, <tt class="docutils literal"><span class="pre">$&lt;</span></tt>, is used to slurp whatever text that comes
-between it and the next line.  It&#8217;s useful for eating up extraneous newlines.</p>
-<p>For instance:</p>
+<p>Two special place holders, <tt class="docutils literal"><span class="pre">$&lt;</span></tt> and <tt class="docutils literal"><span class="pre">$&gt;</span></tt> , are used to discard parts of the
+text line; they are useful for whitespace control.</p>
+<p>Anything in the text line before <tt class="docutils literal"><span class="pre">$&lt;</span></tt> is discarded.</p>
+<p>Example:</p>
+<div class="highlight-none"><div class="highlight"><pre>text line 0
+    $&lt;text line 1
+        $&lt;text line 2
+</pre></div>
+</div>
+<p>will generate the following output:</p>
+<div class="highlight-none"><div class="highlight"><pre>text line 0
+text line 1
+text line 2
+</pre></div>
+</div>
+<p>This allows you some flexibility in indenting the source template lines, making
+them more readable.</p>
+<p>Anything in the text line after <tt class="docutils literal"><span class="pre">$&gt;</span></tt> is discarded.</p>
+<p>Example:</p>
 <div class="highlight-none"><div class="highlight"><pre>this is the end of the file
 #end template
 </pre></div>
 </div>
 <p>will generate a newline after &#8220;file&#8221; since it&#8217;s considered part of the
 textline, whereas:</p>
-<div class="highlight-none"><div class="highlight"><pre>this is the end of the file$&lt;
+<div class="highlight-none"><div class="highlight"><pre>this is the end of the file$&gt;
 #end template
 </pre></div>
 </div>
@@ -381,12 +402,12 @@ textline, whereas:</p>
 </div>
 </div>
 <div class="section" id="template-execution">
-<span id="id1"></span><h2><a class="toc-backref" href="#id19">Template Execution</a><a class="headerlink" href="#template-execution" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id21">Template Execution</a><a class="headerlink" href="#template-execution" title="Permalink to this headline">¶</a></h2>
 <p>When a template function executes, it has a set of variables defined on entry.
 Here they are in definition order:</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference internal" href="#import-directive"><em>python import</em></a> aliases</li>
+<li><a class="reference internal" href="#import-directive"><em>python import</em></a> aliases, including the <a class="reference internal" href="#utility-classes"><em>_utils</em></a> autoimport</li>
 <li><a class="reference internal" href="#load-directive"><em>template load</em></a> aliases</li>
 <li>module <a class="reference internal" href="#attribute-directive"><em>attributes</em></a></li>
 <li>other <a class="reference internal" href="#template-directive"><em>template function</em></a> names within the same module</li>
@@ -409,7 +430,7 @@ function&#8217;s return.</li>
 </dl>
 </div>
 <div class="section" id="template-modules">
-<span id="id2"></span><h2><a class="toc-backref" href="#id20">Template Modules</a><a class="headerlink" href="#template-modules" title="Permalink to this headline">¶</a></h2>
+<span id="id2"></span><h2><a class="toc-backref" href="#id22">Template Modules</a><a class="headerlink" href="#template-modules" title="Permalink to this headline">¶</a></h2>
 <p>Template functions in the same file are grouped into a template module.  After
 a <a class="reference internal" href="#load-directive"><em>load</em></a>, you can access a module&#8217;s functions through the
 alias:</p>
@@ -435,6 +456,15 @@ first cloning <tt class="docutils literal"><span class="pre">mod1</span></tt> wi
 <tt class="docutils literal"><span class="pre">mod3</span></tt> as mixins. The final lookup for &#8220;attr&#8221; is valid as long as &#8220;attr&#8221; is
 available in any of the three modules.</p>
 <p>See the <a class="reference internal" href="#test-samples"><em>html sample</em></a> for example usage.</p>
+</div>
+<div class="section" id="utility-classes">
+<span id="id3"></span><h2><a class="toc-backref" href="#id23">Utility Classes</a><a class="headerlink" href="#utility-classes" title="Permalink to this headline">¶</a></h2>
+<p>Texthon provides some utility classes/functions to aid template formatting.
+They are automatically imported under the <tt class="docutils literal"><span class="pre">_utils</span></tt> module alias.</p>
+<p>See the <a class="reference external" href="http://github.com/kevinic/texthon/tree/master/tests/nest">nest</a>
+sample for templates that rely on the <tt class="docutils literal"><span class="pre">Indent</span></tt> class to dynamically
+control whitespace.</p>
+<p><a class="reference internal" href="api.html#utility-module"><em>More details</em></a>.</p>
 </div>
 </div>
 
