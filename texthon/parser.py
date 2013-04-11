@@ -78,7 +78,7 @@ class Parser:
 	""" The parser used to process template files.
 
 	:param directive_token: the prefix that indicates the start of a directive line.
-	:param placeholder: the character that indicates the start of a placeholder
+	:param sub_ch: the character that indicates the start of a placeholder
 	"""
 	def __init__(self,
 			directive_token = "#",
@@ -272,6 +272,9 @@ class Parser:
 		# consume optional space
 		cursor, _ = self.parse_space(context, line, cursor)
 		exec_ch = "!{}"
+		if cursor == len(line):
+			raise Parse_Exception(context, "malformed directive: {}".format(line))
+	
 		ch = line[cursor]
 		if self._check_ch(ch, exec_ch):
 			self.parse_exec(context, line, cursor)
@@ -344,8 +347,19 @@ class Parser:
 		}
 
 		if params_text:
-			for param in params_text.split(','):
-				pair = param.split('=')
+			# split by comma, preserve quotes
+			comma_lex = shlex.shlex(params_text)
+			comma_lex.whitespace_split = True
+			comma_lex.whitespace = ","
+			comma_lex.commenters = ""
+
+			for param in comma_lex:
+				# split by eq, strip quotes
+				eq_lex = shlex.shlex(param, posix = True)
+				eq_lex.whitespace_split = True
+				eq_lex.whitespace += "="
+				eq_lex.commenters = ""
+				pair = list(eq_lex)
 				key = pair[0].strip()
 				value = True
 
@@ -446,6 +460,8 @@ class Parser:
 
 		cursor = 0
 		limit = len(line)
+
+
 		literal = base.StringIO()
 		placeholder = None
 
@@ -455,6 +471,16 @@ class Parser:
 				self.emit_literal(context, text)
 				literal.seek(0)
 				literal.truncate()
+
+		# do a first pass to search for line begin slurps
+		temp = cursor
+		while temp < limit:
+			if self._check_ch(line[temp], self.placeholder):
+				temp += 1
+				if temp < limit and line[temp] == '<':
+					cursor = temp + 1
+					break
+			temp += 1
 
 		while cursor < limit:
 			ch = line[cursor]
@@ -479,7 +505,7 @@ class Parser:
 						cursor, ident = self.parse_identifier(context, line, cursor)
 
 					if ident:
-						self.emit_placeholder_ident(context, ident)
+						self.emit_placeholder_exp(context, ident)
 
 				placeholder = None
 			else:
@@ -500,15 +526,9 @@ class Parser:
 			# emit nothing, ignore the comment
 			pass
 
-	def emit_placeholder_ident(self, context, ident):
+	def emit_placeholder_exp(self, context, ident):
 		self.trace(context, "detected placeholder ident {0}".format(ident))
 		self.emit_code(context, "_output.write(str({0}))".format(ident))
-
-	def emit_placeholder_exp(self, context, exp):
-		self.trace(context, "detected placeholder exp {0}".format(exp))
-		context.template.text.append(exp)
-		self.emit_code(context, "_output.write(str(eval(_textdb[{0}])))".format(context.textIndex))
-		context.textIndex += 1
 
 	def emit_literal(self, context, text):
 		context.template.text.append(text)

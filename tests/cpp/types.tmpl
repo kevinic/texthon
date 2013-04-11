@@ -1,0 +1,7 @@
+#import tests.cpp.processor as processor
+#load "types.tmpl.h" as lib(directive_token = "//#")
+
+#template main(name, types)
+#!processor.norm(types)
+${lib.make_types(name, types)}
+#end template

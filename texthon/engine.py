@@ -1,5 +1,6 @@
 from texthon.parser import Parser
 import texthon.base as base
+import texthon.utils
 import io
 import os
 import sys
@@ -77,7 +78,7 @@ class Template_Function:
 		local_vars = {
 			"_module" : self.module,
 			"_textdb" : self.text,
-			"_output" : output
+			"_output" : output,
 		}
 			
 		# bind arguments
@@ -287,6 +288,9 @@ class Engine:
 
 		for key, mod_definition in self.modules.items():
 			module = runtime_modules[key]
+			#auto-import texthon utilities
+			setattr(module, "_utils", texthon.utils)
+
 			for alias, py_module in mod_definition.py_imports.items():
 				setattr(module, alias, importlib.import_module(py_module))
 

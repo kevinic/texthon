@@ -9,3 +9,6 @@ Python API
 .. automodule:: texthon.parser
     :members:
 
+.. _utility_module:
+.. automodule:: texthon.utils
+    :members:

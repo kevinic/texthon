@@ -1,0 +1,5 @@
+#load "nest.tmpl.cpp" as nest(directive_token = //#)
+
+#template main(name, max)
+${nest.make_function(name, max)}
+#end template

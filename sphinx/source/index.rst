@@ -70,29 +70,27 @@ If only it wouldn't bug me about that stupid Namemapper extension all the time.
 
 Example
 ===================================
-Here's a snippet showing sample template text, along with the code
-that evaluates it::
+Here's a simple template file, ``hello.tmpl.txt`` ::
 
-    import texthon
-
-    template = """
     #template main(who, count)
     $who says: 
     #{for i in range(0, count):
         hello world!
     #}
     #end template
-    """
 
-    engine = texthon.Engine()
-    engine.load_text(template, "@root")
-    engine.make()
+using the script ``texthon`` with the following parameters::
 
-    print(engine.modules["@root"].main("someone", 2))
+    texthon hello.tmpl.txt -P who=someone -P count=2
 
-which prints the following output::
+the following output is generated::
 
     someone says: 
         hello world!
         hello world!
 
+
+For an example that's closer to a real-world scenario, `these templates <http://github.com/kevinic/texthon/tree/master/tests/cpp>`_
+demonstrate the use of Texthon to write C++ object reflection code: a task that
+would normally require tedious copy-and-pasting and/or C++ template/macro black
+magic.

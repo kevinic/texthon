@@ -1,0 +1,8 @@
+#import tests.cpp.processor as processor
+#load "rtt.tmpl.h" as lib(directive_token = "//#")
+
+#template main(name, types)
+#!processor.norm(types)
+${lib.make_rtt(name, types)}
+#end template
+

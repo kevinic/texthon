@@ -4,7 +4,7 @@ from texthon.parser import Parser
 from texthon.engine import Engine
 
 class Test_Templates(unittest.TestCase):
-	def do_test(self, test_directory, template_file, param_file = None, out_file = None, includes = []):
+	def do_test(self, test_directory, template_file, param_file = "", out_file = None, includes = []):
 		engine = Engine()
 		directory = os.path.join("tests/", test_directory)
 
@@ -41,13 +41,20 @@ class Test_Templates(unittest.TestCase):
 		print(output)
 
 	def test_hello(self):
-		self.do_test("hello", "hello.tmpl.txt", "hello.tmpl.pyd", "hello.txt")
+		self.do_test("hello", "hello.tmpl.txt", "hello.pyd", "hello.txt")
 
 	def test_basic(self):
-		self.do_test("basic", "basic.tmpl.txt", "basic.tmpl.pyd", "basic.txt")
+		self.do_test("basic", "basic.tmpl.txt", "basic.pyd", "basic.txt")
 
 	def test_html(self):
 		#include directories
 		includes = ["sections"]
-		self.do_test("html", "doc.tmpl.txt", "doc.tmpl.pyd", "doc.html", includes)
+		self.do_test("html", "doc.tmpl", "", "doc.html", includes)
+
+	def test_nest(self):
+		self.do_test("nest", "main.tmpl", "nest.pyd", "nest.cpp")
+
+	def test_cpp(self):
+		self.do_test("cpp", "types.tmpl", "types.pyd", "types.h")
+		self.do_test("cpp", "rtt.tmpl", "types.pyd", "rtt.h")
 
