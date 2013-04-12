@@ -41,10 +41,10 @@ class Test_Templates(unittest.TestCase):
 		print(output)
 
 	def test_hello(self):
-		self.do_test("hello", "hello.tmpl.txt", "hello.pyd", "hello.txt")
+		self.do_test("hello", "hello.tmpl.txt", "hello.param", "hello.txt")
 
 	def test_basic(self):
-		self.do_test("basic", "basic.tmpl.txt", "basic.pyd", "basic.txt")
+		self.do_test("basic", "basic.tmpl.txt", "basic.param", "basic.txt")
 
 	def test_html(self):
 		#include directories
@@ -52,9 +52,9 @@ class Test_Templates(unittest.TestCase):
 		self.do_test("html", "doc.tmpl", "", "doc.html", includes)
 
 	def test_nest(self):
-		self.do_test("nest", "main.tmpl", "nest.pyd", "nest.cpp")
+		self.do_test("nest", "main.tmpl", "nest.param", "nest.cpp")
 
 	def test_cpp(self):
-		self.do_test("cpp", "types.tmpl", "types.pyd", "types.h")
-		self.do_test("cpp", "rtt.tmpl", "types.pyd", "rtt.h")
+		self.do_test("cpp", "types.tmpl", "types.param", "types.h")
+		self.do_test("cpp", "rtt.tmpl", "types.param", "rtt.h")
 

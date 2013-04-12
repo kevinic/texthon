@@ -1,0 +1,36 @@
+{
+	"name" : "game",
+	"types" :
+	[
+		{"name" : "int", "extern" : True},
+		{"name" : "float", "extern" : True},
+		{
+			"name" : "vector",
+			"members" :
+			[
+				("float", "x"),
+				("float", "y"),
+				("float", "z"),
+				("float", "w"),
+			],
+		},
+		{
+			"name" : "transform",
+			"members" :
+			[
+				("vector", "forward"),
+				("vector", "up"),
+				("vector", "left"),
+				("vector", "position"),
+			],
+		},
+		{
+			"name" : "object",
+			"members" :
+			[
+				("int", "health"),
+				("transform", "xform"),
+			]
+		},
+	],
+}
