@@ -16,6 +16,7 @@ Getting Texthon
 ===================================
 
 | `GitHub project page <https://github.com/kevinic/texthon/>`_
+| `Python Package Index <https://pypi.python.org/pypi/Texthon>`_
 | `Source tar.gz <https://github.com/kevinic/texthon/tarball/master>`_
 | `Source zip <https://github.com/kevinic/texthon/zipball/master>`_
 
