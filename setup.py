@@ -4,7 +4,7 @@ with open('README.rst') as file:
 	long_description = file.read()
 
 setup(name='Texthon',
-	version='0.8',
+	version='0.8.1',
 	description='Simple template engine - half text, half Python',
 	long_description = long_description,
 	author='Kevin Lin',
