@@ -1,3 +1,6 @@
+# Copyright 2013 Kevin Lin
+# Licensed under the Apache License, Version 2.0
+
 import unittest
 import os.path
 from texthon.parser import Parser

@@ -1,3 +1,6 @@
+# Copyright 2013 Kevin Lin
+# Licensed under the Apache License, Version 2.0
+
 from texthon.parser import Parser
 import texthon.base as base
 import texthon.utils
