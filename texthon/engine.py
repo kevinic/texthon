@@ -1,9 +1,9 @@
 # Copyright 2013 Kevin Lin
 # Licensed under the Apache License, Version 2.0
 
-from texthon.parser import Parser
-import texthon.base as base
-import texthon.utils
+from .parser import Parser
+from . import base
+from . import utils
 import io
 import os
 import sys
@@ -292,7 +292,7 @@ class Engine:
 		for key, mod_definition in self.modules.items():
 			module = runtime_modules[key]
 			#auto-import texthon utilities
-			setattr(module, "_utils", texthon.utils)
+			setattr(module, "_utils", utils)
 
 			for alias, py_module in mod_definition.py_imports.items():
 				setattr(module, alias, importlib.import_module(py_module))
