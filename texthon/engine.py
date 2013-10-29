@@ -109,7 +109,9 @@ class Template_Function:
 		exception = None
 
 		try:
-			exec(self.code, self.module.__dict__, local_vars)
+			global_vars = dict(self.module.__dict__)
+			global_vars.update(local_vars)
+			exec(self.code, global_vars, local_vars)
 		except Exception as e:
 			self._print_exception(e)
 			exception = e
