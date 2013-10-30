@@ -1,0 +1,7 @@
+#template main(who, count)
+$who says: 
+#!indicesSet = {count-i-1 for i in range(0, count)} # Needs global variable count.
+#{for i in indicesSet:
+    hello world!
+#}
+#end template
