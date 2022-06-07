@@ -1,8 +1,10 @@
 #!python
 import texthon
 import io
+import json
 import string
 import argparse
+import sys
 
 description = "Evaluates a template using the Texthon template engine"
 epilog = """Examples:
@@ -22,6 +24,8 @@ parser.add_argument('-P', '--param', action='append', default=[],
 	help='parameter defines (KEY=VALUE). VALUE is automatically interpreted as a string or an integer')
 
 parser.add_argument('-pf', '--paramfile', default=None, help='parameter definition file')
+parser.add_argument('-pi', '--paraminput', action='store_true', default=False, help='read parameter definition from stdin')
+parser.add_argument('-js', '--json', action='store_true', default=False, help='accept params in json format')
 parser.add_argument('-v', '--verbose', action='store_true', default=False)
 parser.add_argument('-d', '--dump', action='store_true', default=False, help='dump the generated python code')
 parser.add_argument('-o', '--out', default=None, help='the output file')
@@ -41,10 +45,20 @@ path = module.path
 # compile and run
 engine.make()
 
+param_str = ""
 params = {}
 
+if args.paraminput:
+	param_str = sys.stdin.read()
+
 if args.paramfile:
-	params = eval(open(args.paramfile).read())
+	param_str = open(args.paramfile).read()
+
+if param_str:
+	if not args.json:
+		params = eval(param_str)
+	else:
+		params = json.loads(param_str)
 
 for param in args.param:
 	k, v = param.split('=')
